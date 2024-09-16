@@ -1,4 +1,4 @@
-package org.example;
+package org.example.common;
 
 import org.example.dijkstra.Node;
 

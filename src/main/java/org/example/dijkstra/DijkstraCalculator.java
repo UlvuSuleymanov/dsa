@@ -1,6 +1,6 @@
 package org.example.dijkstra;
 
-import org.example.GraphInitializer;
+import org.example.common.GraphInitializer;
 
 import java.util.*;
 
@@ -8,9 +8,23 @@ public class DijkstraCalculator {
 
     public static void main(String[] args) {
         List<Node> graph = GraphInitializer.initializeGraphA();
-        calculate(graph.get(0));
-        graph.get(8).getShortestPaths().stream().forEach(node -> {
-            System.out.println(node.getName() + " " + node.getDistance());
+
+
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Choose fist node:");
+        final String firstNodeName = sc.nextLine();
+        System.out.println("Choose last node:");
+        final String lastNodeName = sc.nextLine();
+
+        Node firstNode = graph.stream().filter(node -> node.getName().equals(firstNodeName)).findFirst().orElseThrow();
+        Node lastNode = graph.stream().filter(node -> node.getName().equals(lastNodeName)).findFirst().orElseThrow();
+         calculate(firstNode);
+        System.out.println("The distance from "+firstNodeName+
+                " to "+lastNodeName +" is " +lastNode.getDistance()+". Tha path is:");
+
+        System.out.print(firstNode.getName()+"(0)");
+        lastNode.getShortestPaths().stream().forEach(node -> {
+            System.out.print("-->"+node.getName() + "(" + node.getDistance()+")");
         });
     }
 
@@ -39,7 +53,7 @@ public class DijkstraCalculator {
         Integer newDistance = source.getDistance() + weight;
         if (adjacentNode.getDistance() > newDistance) {
             adjacentNode.setDistance(newDistance);
-            List<Node> shortestPath = source.getShortestPaths();
+            List<Node> shortestPath = new ArrayList<>(source.getShortestPaths());
             shortestPath.add(adjacentNode);
             adjacentNode.setShortestPaths(shortestPath);
         }
