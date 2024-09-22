@@ -16,7 +16,7 @@ public class ConvertTimeAmPm {
         //minutes and seconds
         String constant = s.substring(2, 8);
 
-        int hourInt = Integer.valueOf(hourStr);
+        int hourInt = Integer.parseInt(hourStr);
 
         int convertedHour = formatType.equals("PM") ? hourInt + 12 : hourInt;
         convertedHour = convertedHour > 23 ? convertedHour - 24 : convertedHour;
